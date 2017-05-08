@@ -1,0 +1,39 @@
+# OpenStack Installation Defaults . Change these according to your setup
+
+# Define Pub/Pvt network parameters
+# PUBLIC_NET_NAME=
+# PUBLIC_NET_POOL_START=
+# PUBLIC_NET_POOL_END=
+# PUBLIC_NET_CIDR= should be same as the PUBLIC_NET_POOL network
+# PRIVATE_NET_CIDR= should be different from PUBLIC_NET_POOL network ,
+# this is the pool where VM's will get their pvt ip's
+# EXT_NET_NAME= e.g. extnet
+# Public subnet allocation range should be outside of your external DHCP range
+# Set the gateway to the default gateway of your current network. (assuming your current network is external_network)
+# Supported releases are : mitaka , newton and ocata ( all lowercase)
+export BILDASTACK_VER="7.X"
+export BILDASTACK_CORE_OS_VER="Bildastack_Core_7"
+export OSP_RELEASE_NAME="mitaka"
+export PUBLIC_NET_NAME="FloatingIP_Public_Net"
+export PUBLIC_NET_POOL_START="10.10.10.210"
+export PUBLIC_NET_POOL_END="10.10.10.230"
+export PUBLIC_NET_CIDR="10.10.10.0/24"
+export PUBLIC_NET_ROUTER_NAME="Admin_Router1"
+export PUBLIC_NET_THIS_HOSTNAME="`hostname`"
+export PUBLIC_NET_DNS="10.10.10.1"
+export EXTERNAL_NET_NAME="ext_net"
+export PRIVATE_NET_CIDR="192.168.100.0/24"
+export PRIVATE_NET_NAME="private_network"
+export PRIVATE_NET_SUBNET_NAME="private_subnet"
+
+
+# Please note we're assuming that first interface has external connectivity,
+# rest of the scripts will use that too , this means ths script will always look
+# for the 1st entry out of multiple nic cards present on the host node
+export PUBLIC_IFACE_NAME=`ip addr | grep -i broadcast | awk '{ print $2 }'| sed 's/:/\ /g' | head -1`
+export PUBLIC_IFACE_IP=`ip add | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1' | head -1`
+export PUBLIC_IFACE_NMASK=`ifconfig $IFACE_NAME | grep netmask | awk '{print $4}' | head -1`
+export PUBLIC_NET_GATEWAY=`ip route | head -1 | awk '{print $3}'`
+export PUBLIC_IFACE_MAC=`ip addr | grep -i ether | awk {'print $2'} | head -1`
+
+

@@ -1,0 +1,75 @@
+#!/bin/bash
+
+#Copyright [2015-2017] [BildaStack Base 7.1.3292017]
+#
+#Licensed under the Apache License, Version 2.0 (the "License");
+#you may not use this file except in compliance with the License.
+#You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+#Unless required by applicable law or agreed to in writing, software
+#distributed under the License is distributed on an "AS IS" BASIS,
+#WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#
+#Modification , redistribution and derivation requires providing a notice
+#to the original authors at license@bildastack.com
+# BildaStack CopyRight 2015-2017
+#
+#
+# File Version : 2.0
+# Author : BildaStack
+
+
+
+# file version 3
+if [ -z "$1" ]
+  then
+    echo
+    echo " No configuration option specified. "
+    echo "  Usage    : bilda [openstack-poc | openstack-devtest | container-poc | uninstall-openstack | uninstall-cont-stack]"
+    echo "  Example  : bilda openstack-poc"
+    echo "  Example  : bilda openstack-add-compute \"10.10.10.21\""
+    echo;echo "  Where : "
+    echo "  openstack-poc       =  Proof-Of-Concept setup with commond defaults"
+    echo "  openstack-add-comp  =  Add new compute node AFTER openstack install 
+    echo "  openstack-devtest   =  Devtest setup with customization options"
+    echo "  container-poc       =  Proof-of-Concept setup for integrated container stack"
+    echo "  uninstall-          =  Uninstall OpenStack or ContainerStack "
+    echo
+    echo " Please re-launch with correct options"
+    exit
+fi
+# Check if we're in a BildaStack packaged installation or a standard Centos environment "
+echo " Self check ..."
+if [ !-f "/root/init_bildastack.sh" ]; then 
+	echo "We are not in a standard BildaStack OS "
+fi
+
+case "$1" in
+'openstack-poc')
+echo "Starting OpenStack Install for a Proof-of-concept with most common default values"
+/root/BildaStack/Install/poc_install.sh
+;;
+'openstack-devtest')
+echo "Stopping application"
+/root/BildaStack/Install/devtest_install.sh
+;;
+'container-poc')
+echo "Not supported in this release, please email support@bildastack.com "
+echo "Usage: $0 [start|stop]"
+;;
+'uninstall-osp-stack')
+echo " Please be warned this will un-install any OpenStack installation from this host !!"
+echo " It's strongly recommended to perform a clean install afterwards with base operating system first"
+/root/BildaStack/Install/uninstall_openstack.sh
+;;
+'uninstall-cont-stack')
+echo " Please be warned this will un-install any Container Stack installation from this host !!"
+echo " It's strongly recommended to perform a clean install afterwards with base operating system first"
+/root/BildaStack/Install/uninstall_container_stack.sh
+;;
+'openstack-add-compute')
+/root/BildaStack/Install/add-compute.sh $2
+;;
+esac
