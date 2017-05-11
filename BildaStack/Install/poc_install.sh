@@ -21,7 +21,7 @@
 
 
 # Source OpenStack Installation Defaults . Change according to your setup
-source /root/BildaStack/Install/poc_vars
+source /root/BildaStack/Install/sys_vars
 
 echo "                  Summary of your Node CONFIGURATION : "
 echo " = = = = = = = = = = = = = = = = = = = = = == = = = = = = = = = = = = = = "
